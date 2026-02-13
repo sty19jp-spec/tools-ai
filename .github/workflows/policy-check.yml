@@ -1,0 +1,32 @@
+name: Policy Check
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  policy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check required structure
+        run: test -f runbooks/Chat004_Runbook_tools-ai_policy_gate.md
+      - name: Block tracked .env files
+        run: |
+          set -e
+          if git ls-files -z | tr '\0' '\n' | grep -nE '(^|/)\.env($|\.|/)'; then
+            echo "::error::.env files must not be committed (tracked by git)."
+            exit 1
+          fi
+      - name: Lightweight secret pattern scan (best-effort)
+        run: |
+          set -e
+          PAT='(-----BEGIN (RSA|EC|OPENSSH|PGP) PRIVATE KEY-----|AKIA[0-9A-Z]{16}|ASIA[0-9A-Z]{16}|ghp_[A-Za-z0-9]{36}|github_pat_[A-Za-z0-9_]{80,}|AIzaSy[0-9A-Za-z_-]{35}|xox[baprs]-[0-9A-Za-z-]{10,48})'
+          if git grep -nE "$PAT" -- .; then
+            echo "::error::Potential secret detected by pattern scan."
+            exit 1
+          else
+            echo "OK: no matches."
+          fi
