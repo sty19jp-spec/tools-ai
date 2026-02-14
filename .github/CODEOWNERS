@@ -1,0 +1,5 @@
+# AI-Guardrails: protected paths require codeowner review
+
+.github/workflows/** @sty19jp-spec
+Makefile @sty19jp-spec
+runbooks/** @sty19jp-spec

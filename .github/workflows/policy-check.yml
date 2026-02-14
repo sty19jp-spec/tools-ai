@@ -12,7 +12,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Check required structure
-        run: test -f runbooks/Chat004_Runbook_tools-ai_policy_gate.md
+        run: |
+          set -e
+          test -f runbooks/Chat004_Runbook_tools-ai_policy_gate.md
+          test -f .github/CODEOWNERS
+          test -f runbooks/ops/AI_EXECUTION.md
       - name: Block tracked .env files
         run: |
           set -e
