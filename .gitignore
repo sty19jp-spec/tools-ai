@@ -1,0 +1,5 @@
+# Codex MVP Guardrails: 単一正本ディレクトリ
+# これらのディレクトリの中身はGit追跡しない
+
+/outputs/
+/state/

@@ -1,0 +1,25 @@
+# Codex MVP Guardrails Configuration Template
+# 
+# このテンプレートは runbooks/ops/Codex_MVP_Guardrails.md に従って
+# ~/.codex/config.toml に配置してください。
+#
+# 注意: Secretsは含めません。実体設定ファイルには手動で追加してください。
+
+# 承認ポリシー: 常に "on-request" に固定
+approval_policy = "on-request"
+
+# プレフィックスルール: admin-enforced でデフォルトブロック
+[prefix_rules]
+# docker build コマンドをデフォルトブロック
+"docker build" = { action = "block", admin_enforced = true }
+
+# docker run コマンドをデフォルトブロック
+"docker run" = { action = "block", admin_enforced = true }
+
+# 単一正本ディレクトリ設定
+[directories]
+# 出力ディレクトリ（Git追跡対象外）
+outputs = "/home/shun/outputs"
+
+# 状態管理ディレクトリ（Git追跡対象外）
+state = "/home/shun/state"
