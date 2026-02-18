@@ -47,8 +47,8 @@
    - `docker run`: ブロック
 
 3. **単一正本ディレクトリ**:
-   - `/home/shun/outputs`: 出力ディレクトリ（Git追跡対象外）
-   - `/home/shun/state`: 状態管理ディレクトリ（Git追跡対象外）
+   - `outputs`: 出力ディレクトリ（Git追跡対象外）
+   - `state`: 状態管理ディレクトリ（Git追跡対象外）
 
 ---
 
@@ -79,8 +79,8 @@ cat ~/.codex/config.toml
 以下のパスが `.gitignore` に含まれていることを確認します：
 
 ```
-/home/shun/outputs
-/home/shun/state
+outputs
+state
 ```
 
 ---
@@ -119,10 +119,10 @@ grep -A1 '"docker run"' ~/.codex/config.toml | grep -q 'action = "block"' && ech
 ```bash
 # 出力ディレクトリがGit追跡対象外であることを確認
 cd ~/tools-ai
-git check-ignore /home/shun/outputs && echo "OK: outputs is ignored" || echo "NG: outputs is not ignored"
+git check-ignore outputs && echo "OK: outputs is ignored" || echo "NG: outputs is not ignored"
 
 # 状態管理ディレクトリがGit追跡対象外であることを確認
-git check-ignore /home/shun/state && echo "OK: state is ignored" || echo "NG: state is not ignored"
+git check-ignore state && echo "OK: state is ignored" || echo "NG: state is not ignored"
 ```
 
 ### 4.5 成功判定
@@ -133,8 +133,8 @@ git check-ignore /home/shun/state && echo "OK: state is ignored" || echo "NG: st
 - [ ] `approval_policy = "on-request"` が設定されている
 - [ ] `docker build` がブロックされている
 - [ ] `docker run` がブロックされている
-- [ ] `/home/shun/outputs` が `.gitignore` に含まれている
-- [ ] `/home/shun/state` が `.gitignore` に含まれている
+- [ ] `outputs` が `.gitignore` に含まれている
+- [ ] `state` が `.gitignore` に含まれている
 
 ---
 
@@ -190,8 +190,8 @@ cd ~/tools-ai
 cat .gitignore | grep -E "(outputs|state)"
 
 # 既に追跡されている場合は削除（注意: ファイルは残ります）
-git rm --cached /home/shun/outputs/* 2>/dev/null || true
-git rm --cached /home/shun/state/* 2>/dev/null || true
+git rm --cached outputs/* 2>/dev/null || true
+git rm --cached state/* 2>/dev/null || true
 ```
 
 ---
@@ -200,7 +200,7 @@ git rm --cached /home/shun/state/* 2>/dev/null || true
 
 - [ ] `runbooks/codex/config.toml.template` が存在する
 - [ ] `~/.codex/config.toml` が作成されている
-- [ ] `.gitignore` に `/home/shun/outputs` と `/home/shun/state` が追加されている
+- [ ] `.gitignore` に `outputs` と `state` が追加されている
 - [ ] 検証手順がすべて成功する
 - [ ] `policy-check` が通る
 - [ ] PR が作られ、CIが通る状態になる
